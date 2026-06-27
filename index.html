@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brew & Bites Cafe</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+<!-- Mode Switcher -->
+<div class="mode-switcher" id="modeSwitcher"></div>
+
+<!-- ═══════════════════════════════════
+     CUSTOMER VIEW
+═══════════════════════════════════ -->
+<div id="customerView" class="view active">
+  <div class="cafe-header">
+    <div class="cafe-logo">Brew <span>&</span> Bites</div>
+    <div class="table-pill">Table <strong id="tableLabel">T-04</strong> — Scan to order</div>
+  </div>
+
+  <div class="category-bar" id="categoryBar"></div>
+
+  <div class="menu-section" id="menuSection"></div>
+
+  <!-- Customer Authentication Overlay -->
+  <div class="sheet-overlay" id="customerAuthOverlay" onclick="closeAuthOnOverlay(event)" style="align-items: center; justify-content: center;">
+    <div class="auth-overlay-card">
+      <div class="auth-card-inner">
+        <div class="sheet-title" id="authSheetTitle">🔑 LOGIN ❤️</div>
+        
+        <div class="auth-toggle-tabs">
+          <button class="auth-toggle-tab active" id="tabCustomerLogin" onclick="setAuthTab('login')">Log In</button>
+          <button class="auth-toggle-tab" id="tabCustomerRegister" onclick="setAuthTab('register')">Sign Up</button>
+        </div>
+
+        <div class="auth-error" id="customerAuthError"></div>
+
+        <!-- Registration Name Field -->
+        <div class="form-group" id="customerNameGroup" style="display:none;">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" id="custRegName" placeholder="John Doe">
+        </div>
+
+        <!-- Common Email Field -->
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" id="custEmail" placeholder="yourname@example.com">
+        </div>
+
+        <!-- Registration Phone Field -->
+        <div class="form-group" id="customerPhoneGroup" style="display:none;">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-input" id="custRegPhone" placeholder="9876543210">
+        </div>
+
+        <!-- Common Password Field -->
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="custPassword" placeholder="••••••••">
+        </div>
+
+        <button class="place-order-btn" style="margin-top:10px; width:100%;" id="customerAuthSubmit" onclick="submitCustomerAuth()">Log In</button>
+        
+        <div style="margin-top: 16px; display: flex; justify-content: space-between; font-size: 12px; color: #aaa;">
+          <span class="auth-link" onclick="alert('Demo Mode: Admin password is admin123')">Forgot Password</span>
+          <span class="auth-link" id="toggleRegText" onclick="toggleRegLink()">Sign Up</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Bar -->
+  <div class="cart-bar" id="cartBar">
+    <div class="cart-summary">
+      <div class="cart-count" id="cartCountLabel">0 items</div>
+      <div class="cart-total" id="cartTotalLabel">₹0.00</div>
+    </div>
+    <button class="cart-cta" onclick="openCart()">View Cart →</button>
+  </div>
+
+  <!-- Cart Sheet -->
+  <div class="sheet-overlay" id="cartOverlay" onclick="closeCartOnOverlay(event)">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-title">My Cart</div>
+      <div id="cartItemsContainer"></div>
+      
+      <div style="margin-top:20px">
+        <div class="summary-row">
+          <span>Subtotal</span><span id="subtotalVal">₹0.00</span>
+        </div>
+        <div class="summary-row">
+          <span>CGST & SGST (5%)</span><span id="taxVal">₹0.00</span>
+        </div>
+        <div class="summary-row total">
+          <span>Grand Total</span><span id="grandTotalVal">₹0.00</span>
+        </div>
+      </div>
+
+      <textarea class="note-area" id="orderNote" placeholder="Add cooking instructions (e.g. less spicy, extra ice)..." rows="3"></textarea>
+      <button class="place-order-btn" onclick="placeOrder()">Place Order</button>
+    </div>
+  </div>
+
+  <!-- Order Confirmed View -->
+  <div class="order-confirmed" id="orderConfirmed">
+    <div class="confirmed-icon">🎉</div>
+    <div class="confirmed-title">Order Placed!</div>
+    <div class="confirmed-sub">Your order has been sent to the kitchen.<br>Please pay at the counter when you dine out.</div>
+    <div class="order-number" id="orderNumDisplay">#1001</div>
+    <button class="place-order-btn" style="max-width:200px" onclick="resetCustomer()">Order More</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     ADMIN PORTAL
+═══════════════════════════════════ -->
+<div id="adminView" class="view">
+  <div class="admin-login" id="adminAuthSection">
+    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(200,129,58,0.15) 0%, transparent 75%); pointer-events: none;"></div>
+    <div class="admin-login-card" style="position: relative; z-index: 2;">
+      <div class="admin-login-logo">Brew <span>&</span> Bites</div>
+      <div class="admin-login-subtitle">Owner & Staff Portal</div>
+      <div class="auth-error" id="adminAuthError" style="margin-bottom: 16px;"></div>
+      
+      <div class="form-group">
+        <label class="form-label" style="color: var(--espresso);">Admin Email</label>
+        <input type="email" class="form-input" id="adminEmail" placeholder="owner@brewandbites.com" style="border-color: rgba(200,129,58,0.2);">
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label" style="color: var(--espresso);">Password</label>
+        <input type="password" class="form-input" id="adminPassword" placeholder="••••••••" style="border-color: rgba(200,129,58,0.2);">
+      </div>
+      
+      <button class="place-order-btn" style="margin-top: 12px; font-weight: 600;" onclick="submitAdminAuth()">Log In</button>
+      <button class="btn btn-ghost" style="margin-top: 12px; width: 100%; justify-content: center;" onclick="showView('customer')">← Back to Customer Menu</button>
+    </div>
+  </div>
+
+  <div class="admin-layout" id="adminDashboard" style="display: none;">
+    <!-- Sidebar -->
+    <div class="admin-sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-name">Brew <span>&</span> Bites</div>
+        <div class="sidebar-badge">Admin Dashboard</div>
+      </div>
+      <div class="sidebar-nav">
+        <div class="nav-section-label">Operations</div>
+        <button class="nav-item active" onclick="adminTab(this,'orders')">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          Live Orders
+        </button>
+        <button class="nav-item" onclick="adminTab(this,'tables')">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          Tables
+        </button>
+        <button class="nav-item" onclick="adminTab(this,'billing')">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 14l2 2 4-4"/><path d="M5 7h14M5 11h14M5 15h6"/></svg>
+          Billing
+        </button>
+        <div class="nav-section-label" style="margin-top:12px">Reports</div>
+        <button class="nav-item" onclick="adminTab(this,'summary')">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 5-5"/></svg>
+          Today's Summary
+        </button>
+        <div class="nav-section-label" style="margin-top:12px">Management</div>
+        <button class="nav-item" onclick="adminTab(this,'menu-manage')">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          Manage Menu
+        </button>
+        <div class="nav-section-label" style="margin-top:12px">Account</div>
+        <button class="nav-item" onclick="logoutAdmin()" style="color: #FFCDD0;">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="admin-main">
+      <div class="admin-topbar">
+        <div class="admin-topbar-title" id="adminTabTitle">Live Orders</div>
+        <div class="topbar-actions">
+          <div class="time-badge" id="adminClock"></div>
+          <button class="btn btn-ghost" onclick="refreshAdmin()">↻ Refresh</button>
+        </div>
+      </div>
+
+      <div class="admin-content">
+        <!-- STATS -->
+        <div class="stats-grid" id="statsGrid"></div>
+
+        <!-- ORDERS TAB -->
+        <div id="tab-orders">
+          <div class="admin-grid">
+            <div>
+              <div class="panel">
+                <div class="panel-header">
+                  <div class="panel-title">Orders</div>
+                  <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="filterOrders(this,'all')">All</button>
+                    <button class="filter-tab" onclick="filterOrders(this,'pending')">Pending</button>
+                    <button class="filter-tab" onclick="filterOrders(this,'preparing')">Preparing</button>
+                    <button class="filter-tab" onclick="filterOrders(this,'ready')">Ready</button>
+                    <button class="filter-tab" onclick="filterOrders(this,'served')">Served</button>
+                  </div>
+                </div>
+                <div class="order-list" id="orderList"></div>
+              </div>
+            </div>
+            <div id="orderDetailPanel">
+              <div class="order-detail" style="padding:40px;text-align:center;color:var(--mid-gray)">
+                Select an order from the list to view details & actions.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLES TAB -->
+        <div id="tab-tables" style="display:none">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Table Occupancy</div></div>
+            <div class="tables-grid" id="tablesGrid"></div>
+          </div>
+        </div>
+
+        <!-- BILLING TAB -->
+        <div id="tab-billing" style="display:none">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Served — Pending Bill</div></div>
+            <div class="order-list" id="billingList"></div>
+          </div>
+        </div>
+
+        <!-- SUMMARY TAB -->
+        <div id="tab-summary" style="display:none">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Today's revenue breakdown</div></div>
+            <div style="padding:20px">
+              <div id="summaryContent"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MENU MANAGEMENT TAB -->
+        <div id="tab-menu-manage" style="display:none">
+          <div class="admin-grid">
+            <div>
+              <div class="panel">
+                <div class="panel-header">
+                  <div class="panel-title">Menu Catalog</div>
+                  <button class="btn btn-primary" onclick="openAddMenuPanel()" style="padding:6px 14px; font-size:12px;">+ Add Item</button>
+                </div>
+                <div class="order-list" id="adminMenuList" style="max-height:500px;"></div>
+              </div>
+            </div>
+            <div id="menuEditPanel">
+              <div class="order-detail">
+                <div class="detail-header">
+                  <div class="detail-title">Edit Item Details</div>
+                </div>
+                <div class="detail-body" style="color:var(--mid-gray);font-size:14px;padding:40px 20px;text-align:center;">
+                  Click any item from the catalog list to edit details or delete it.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bill Modal -->
+<div class="bill-modal-overlay" id="billModal">
+  <div class="bill-modal">
+    <div class="bill-header">
+      <div class="bill-name">Brew <span>&</span> Bites</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px" id="billDateTime"></div>
+    </div>
+    <div class="bill-body">
+      <div class="bill-section-title" id="billTableLabel">Table —</div>
+      <div id="billItemsRows"></div>
+      <div class="bill-total-row">
+        <span>Total</span><span id="billGrandTotal">₹0</span>
+      </div>
+      <div style="font-size:12px;color:var(--mid-gray);text-align:center;margin-top:12px">
+        Tax (5%) included · Thank you for dining with us!
+      </div>
+    </div>
+    <div class="bill-footer" style="display:flex; flex-direction:column; gap:10px; width:100%;">
+      <!-- eBill WhatsApp Phone number input -->
+      <div id="ebillInputContainer" style="display:none; width:100%; border-top:1px dashed var(--light-gray); padding-top:12px; margin-top:4px; text-align:left;">
+        <label class="form-label" style="color:var(--espresso); margin-bottom:6px; font-size:11px;">Customer WhatsApp No. (with country code)</label>
+        <div style="display:flex; gap:8px;">
+          <input type="tel" class="form-input" id="ebillPhone" placeholder="919876543210" style="flex:1; padding:8px 12px; font-size:13px;">
+          <button class="btn btn-primary" onclick="triggerEBillSend()" style="padding:8px 14px; font-size:13px;">Send</button>
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; width:100%;">
+        <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="toggleEBillInput()">💬 Send eBill</button>
+        <button class="btn btn-success" style="flex:1; justify-content:center;" onclick="markPaid()">✓ Mark Paid</button>
+        <button class="btn btn-ghost" onclick="closeBill()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js" defer></script>
+
+<!-- Magic Social Share Menu -->
+<div class="social-menu" id="socialShareMenu">
+  <div class="social-toggle" onclick="toggleSocialMenu()">
+    📣
+  </div>
+  <li style="--i:0; --clr:#1877f2;"><a href="https://facebook.com" target="_blank">🌐</a></li>
+  <li style="--i:1; --clr:#1da1f2;"><a href="https://twitter.com" target="_blank">🐦</a></li>
+  <li style="--i:2; --clr:#e1306c;"><a href="https://instagram.com" target="_blank">📸</a></li>
+  <li style="--i:3; --clr:#ff0000;"><a href="https://youtube.com" target="_blank">📺</a></li>
+  <li style="--i:4; --clr:#25d366;"><a href="https://whatsapp.com" target="_blank">💬</a></li>
+  <li style="--i:5; --clr:#0077b5;"><a href="https://linkedin.com" target="_blank">🔗</a></li>
+</div>
+
+</body>
+</html>
