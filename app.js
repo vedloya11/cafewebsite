@@ -6,25 +6,39 @@ let MENU = [];
 let CATEGORIES = ['All'];
 
 const DEFAULT_MENU = [
-  { id:1, name:'Cappuccino', desc:'Double shot with velvety foam', price:180, emoji:'☕', cat:'Coffee', veg:true },
-  { id:2, name:'Cold Brew', desc:'18-hour steeped, served over ice', price:220, emoji:'🧊', cat:'Coffee', veg:true },
-  { id:3, name:'Flat White', desc:'Silky micro-foam, strong espresso', price:200, emoji:'🍵', cat:'Coffee', veg:true },
-  { id:4, name:'Matcha Latte', desc:'Japanese grade, oat milk', price:250, emoji:'🍵', cat:'Coffee', veg:true },
-  { id:5, name:'Mango Shake', desc:'Fresh mango, ice cream blend', price:190, emoji:'🥭', cat:'Drinks', veg:true },
-  { id:6, name:'Oreo Frappe', desc:'Cookies & cream blended', price:230, emoji:'🥤', cat:'Drinks', veg:true },
-  { id:7, name:'Lemon Iced Tea', desc:'Freshly brewed, honey lemon', price:150, emoji:'🍋', cat:'Drinks', veg:true },
-  { id:8, name:'Watermelon Juice', desc:'Fresh pressed, no sugar', price:160, emoji:'🍉', cat:'Drinks', veg:true },
-  { id:9, name:'Avocado Toast', desc:'Multigrain bread, cherry tomatoes', price:280, emoji:'🥑', cat:'Food', veg:true },
-  { id:10, name:'Chicken Sandwich', desc:'Grilled chicken, chipotle mayo', price:320, emoji:'🥪', cat:'Food', veg:false },
-  { id:11, name:'Veg Croissant', desc:'Butter croissant, pesto & mozzarella', price:260, emoji:'🥐', cat:'Food', veg:true },
-  { id:12, name:'Eggs Benedict', desc:'Poached eggs, hollandaise', price:340, emoji:'🍳', cat:'Food', veg:true },
-  { id:13, name:'Truffle Pasta', desc:'Fettuccine, cream, black truffle', price:380, emoji:'🍝', cat:'Mains', veg:true },
-  { id:14, name:'Butter Chicken', desc:'Slow-cooked, with naan', price:360, emoji:'🍗', cat:'Mains', veg:false },
-  { id:15, name:'Paneer Tikka', desc:'Tandoor-grilled, mint chutney', price:310, emoji:'🧆', cat:'Mains', veg:true },
-  { id:16, name:'Cheesecake', desc:'New York style, berry compote', price:210, emoji:'🍰', cat:'Desserts', veg:true },
-  { id:17, name:'Brownie Sundae', desc:'Warm brownie, vanilla ice cream', price:240, emoji:'🍫', cat:'Desserts', veg:true },
-  { id:18, name:'Tiramisu', desc:'Espresso-soaked, mascarpone', price:260, emoji:'🍮', cat:'Desserts', veg:true },
+  { id:1, name:'Cappuccino', desc:'Double shot with velvety foam', price:180, emoji:'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=400&q=80', cat:'Coffee', veg:true },
+  { id:2, name:'Cold Brew', desc:'18-hour steeped, served over ice', price:220, emoji:'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=400&q=80', cat:'Coffee', veg:true },
+  { id:3, name:'Flat White', desc:'Silky micro-foam, strong espresso', price:200, emoji:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80', cat:'Coffee', veg:true },
+  { id:4, name:'Matcha Latte', desc:'Japanese grade, oat milk', price:250, emoji:'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=400&q=80', cat:'Coffee', veg:true },
+  { id:5, name:'Mango Shake', desc:'Fresh mango, ice cream blend', price:190, emoji:'https://images.unsplash.com/photo-1553530979-7ee52a2670c4?auto=format&fit=crop&w=400&q=80', cat:'Drinks', veg:true },
+  { id:6, name:'Oreo Frappe', desc:'Cookies & cream blended', price:230, emoji:'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=400&q=80', cat:'Drinks', veg:true },
+  { id:7, name:'Lemon Iced Tea', desc:'Freshly brewed, honey lemon', price:150, emoji:'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=400&q=80', cat:'Drinks', veg:true },
+  { id:8, name:'Watermelon Juice', desc:'Fresh pressed, no sugar', price:160, emoji:'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?auto=format&fit=crop&w=400&q=80', cat:'Drinks', veg:true },
+  { id:9, name:'Avocado Toast', desc:'Multigrain bread, cherry tomatoes', price:280, emoji:'https://images.unsplash.com/photo-1541532713592-79a0317b6b77?auto=format&fit=crop&w=400&q=80', cat:'Food', veg:true },
+  { id:10, name:'Chicken Sandwich', desc:'Grilled chicken, chipotle mayo', price:320, emoji:'https://images.unsplash.com/photo-1567206563066-0f65d8db0cf0?auto=format&fit=crop&w=400&q=80', cat:'Food', veg:false },
+  { id:11, name:'Veg Croissant', desc:'Butter croissant, pesto & mozzarella', price:260, emoji:'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=400&q=80', cat:'Food', veg:true },
+  { id:12, name:'Eggs Benedict', desc:'Poached eggs, hollandaise', price:340, emoji:'https://images.unsplash.com/photo-1608039829572-78524f79c4c7?auto=format&fit=crop&w=400&q=80', cat:'Food', veg:true },
+  { id:13, name:'Truffle Pasta', desc:'Fettuccine, cream, black truffle', price:380, emoji:'https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=400&q=80', cat:'Mains', veg:true },
+  { id:14, name:'Butter Chicken', desc:'Slow-cooked, with naan', price:360, emoji:'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=400&q=80', cat:'Mains', veg:false },
+  { id:15, name:'Paneer Tikka', desc:'Tandoor-grilled, mint chutney', price:310, emoji:'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=400&q=80', cat:'Mains', veg:true },
+  { id:16, name:'Cheesecake', desc:'New York style, berry compote', price:210, emoji:'https://images.unsplash.com/photo-1524351199679-46cddf530c04?auto=format&fit=crop&w=400&q=80', cat:'Desserts', veg:true },
+  { id:17, name:'Brownie Sundae', desc:'Warm brownie, vanilla ice cream', price:240, emoji:'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=400&q=80', cat:'Desserts', veg:true },
+  { id:18, name:'Tiramisu', desc:'Espresso-soaked, mascarpone', price:260, emoji:'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=400&q=80', cat:'Desserts', veg:true }
 ];
+
+function getItemMedia(val, sizeClass = 'menu-card-img') {
+  if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
+    return `<div class="${sizeClass}" style="overflow:hidden; padding:0; display:inline-block; vertical-align:middle;"><img src="${val}" class="item-media-img" alt="item" style="width:100%; height:100%; object-fit:cover; display:block;"></div>`;
+  }
+  return `<div class="${sizeClass}" style="display:inline-flex; align-items:center; justify-content:center; vertical-align:middle;">${val || '🍽️'}</div>`;
+}
+
+function getItemEmojiFallback(val) {
+  if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
+    return '🍽️';
+  }
+  return val || '🍽️';
+}
 
 function updateCategories() {
   CATEGORIES = ['All', ...new Set(MENU.map(i => i.cat))];
@@ -82,6 +96,8 @@ function renderSwitcher() {
   const switcher = document.getElementById('modeSwitcher');
   if (!switcher) return;
   
+  const container = document.getElementById('adminQuickAddContainer');
+  
   if (currentAdmin) {
     switcher.innerHTML = `
       <span class="switcher-user-text">👑 Admin</span>
@@ -89,15 +105,18 @@ function renderSwitcher() {
       <button class="mode-btn admin" onclick="showView('admin')">⚙ Dashboard</button>
       <button class="mode-btn customer" onclick="logoutBoth()" style="background:#FFF1F0; color:var(--danger); border: 1.5px solid #FFCDD0; margin-left: 4px;">Logout</button>
     `;
+    if (container) container.style.display = 'block';
   } else if (currentUser) {
     switcher.innerHTML = `
       <span class="switcher-user-text">👤 ${currentUser.name}</span>
       <button class="mode-btn customer" onclick="logoutBoth()" style="background:#FFF1F0; color:var(--danger); border: 1.5px solid #FFCDD0;">Logout</button>
     `;
+    if (container) container.style.display = 'none';
   } else {
     switcher.innerHTML = `
       <button class="mode-btn admin" onclick="openCustomerAuth()">🔑 Login</button>
     `;
+    if (container) container.style.display = 'none';
   }
 }
 
@@ -337,7 +356,7 @@ function menuCardHTML(item) {
   return `
     <div class="menu-card" id="card-${item.id}">
       <div class="veg-dot ${item.veg?'veg':'non-veg'}"></div>
-      <div class="menu-card-img">${item.emoji}</div>
+      ${getItemMedia(item.emoji, 'menu-card-img')}
       <div class="menu-card-body">
         <div class="menu-card-name">${item.name}</div>
         <div class="menu-card-desc">${item.desc}</div>
@@ -345,10 +364,10 @@ function menuCardHTML(item) {
           <div class="menu-price">₹${item.price}</div>
           <div class="qty-control">
             ${qty > 0 ? `
-              <button class="qty-btn minus" onclick="changeQty(${item.id},-1)">−</button>
+              <button class="qty-btn minus" onclick="changeQty('${item.id}',-1)">−</button>
               <span class="qty-num" id="qty-${item.id}">${qty}</span>
             ` : ''}
-            <button class="qty-btn plus" onclick="changeQty(${item.id},1)">+</button>
+            <button class="qty-btn plus" onclick="changeQty('${item.id}',1)">+</button>
           </div>
         </div>
       </div>
@@ -357,7 +376,8 @@ function menuCardHTML(item) {
 }
 
 function changeQty(id, delta) {
-  const item = MENU.find(i => i.id === id);
+  const numericId = isNaN(id) ? id : Number(id);
+  const item = MENU.find(i => i.id === numericId);
   if (!cart[id]) cart[id] = { ...item, qty: 0 };
   cart[id].qty = Math.max(0, cart[id].qty + delta);
   if (cart[id].qty === 0) delete cart[id];
@@ -368,17 +388,19 @@ function changeQty(id, delta) {
 function updateCardQty(id) {
   const card = document.getElementById(`card-${id}`);
   if (!card) return;
-  const item = MENU.find(i => i.id === id);
+  const numericId = isNaN(id) ? id : Number(id);
+  const item = MENU.find(i => i.id === numericId);
+  if (!item) return;
   const qty = cart[id]?.qty || 0;
   const footer = card.querySelector('.menu-card-footer');
   footer.innerHTML = `
     <div class="menu-price">₹${item.price}</div>
     <div class="qty-control">
       ${qty > 0 ? `
-        <button class="qty-btn minus" onclick="changeQty(${id},-1)">−</button>
+        <button class="qty-btn minus" onclick="changeQty('${id}',-1)">−</button>
         <span class="qty-num" id="qty-${id}">${qty}</span>
       ` : ''}
-      <button class="qty-btn plus" onclick="changeQty(${id},1)">+</button>
+      <button class="qty-btn plus" onclick="changeQty('${id}',1)">+</button>
     </div>
   `;
 }
@@ -392,6 +414,17 @@ function updateCartBar() {
   document.getElementById('cartTotalLabel').textContent = `₹${total}`;
   const bar = document.getElementById('cartBar');
   if (count > 0) bar.classList.add('visible'); else bar.classList.remove('visible');
+
+  // Update top navigation cart count
+  const navCartBadge = document.getElementById('navCartCount');
+  if (navCartBadge) {
+    if (count > 0) {
+      navCartBadge.textContent = count;
+      navCartBadge.style.display = 'inline-flex';
+    } else {
+      navCartBadge.style.display = 'none';
+    }
+  }
 }
 
 function openCart() {
@@ -413,15 +446,15 @@ function renderCartSheet() {
   } else {
     container.innerHTML = items.map(item => `
       <div class="cart-item">
-        <div class="cart-item-emoji">${item.emoji}</div>
+        ${getItemMedia(item.emoji, 'cart-item-emoji')}
         <div class="cart-item-info">
           <div class="cart-item-name">${item.name}</div>
           <div class="cart-item-price">₹${item.price} each</div>
         </div>
         <div class="cart-item-qty">
-          <button class="qty-btn minus" onclick="changeQty(${item.id},-1);renderCartSheet();updateCartBar()">−</button>
+          <button class="qty-btn minus" onclick="changeQty('${item.id}',-1);renderCartSheet();updateCartBar()">−</button>
           <span class="qty-num">${item.qty}</span>
-          <button class="qty-btn plus" onclick="changeQty(${item.id},1);renderCartSheet();updateCartBar()">+</button>
+          <button class="qty-btn plus" onclick="changeQty('${item.id}',1);renderCartSheet();updateCartBar()">+</button>
         </div>
       </div>
     `).join('');
@@ -545,7 +578,10 @@ function renderAdminTab() {
   if (activeAdminTab === 'tables') renderTables();
   if (activeAdminTab === 'billing') renderBilling();
   if (activeAdminTab === 'summary') renderSummary();
-  if (activeAdminTab === 'menu-manage') renderAdminMenuList();
+  if (activeAdminTab === 'menu-manage') {
+    renderAdminMenuList();
+    openAddMenuPanel();
+  }
 }
 
 function renderAdminMenuList() {
@@ -558,7 +594,7 @@ function renderAdminMenuList() {
   const sortedMenu = [...MENU].sort((a,b) => a.cat.localeCompare(b.cat) || a.name.localeCompare(b.name));
   list.innerHTML = sortedMenu.map(item => `
     <div class="order-row" onclick="selectMenuEditItem(${item.id})">
-      <div class="order-num-badge" style="background:var(--caramel-light);color:var(--espresso);font-size:18px;">${item.emoji}</div>
+      <div class="order-num-badge" style="background:var(--caramel-light);color:var(--espresso);font-size:18px;overflow:hidden;padding:0;">${getItemMedia(item.emoji, 'admin-menu-badge-img')}</div>
       <div class="order-meta">
         <div class="order-table-name">${item.name} <span class="status-pill ${item.veg?'ready':'billed'}" style="font-size:10px;padding:2px 8px;">${item.veg?'Veg':'Non-Veg'}</span></div>
         <div class="order-items-preview">${item.desc} · <strong>Category: ${item.cat}</strong></div>
@@ -799,7 +835,7 @@ function renderOrderList(filter) {
         <div class="order-num-badge">#${o.id}</div>
         <div class="order-meta">
           <div class="order-table-name">${o.tableId}${custName} · ${statusPill(o.status)}</div>
-          <div class="order-items-preview">${o.items.map(i=>`${i.emoji} ${i.name} ×${i.qty}`).join(', ')}</div>
+          <div class="order-items-preview">${o.items.map(i=>`${getItemEmojiFallback(i.emoji)} ${i.name} ×${i.qty}`).join(', ')}</div>
           ${o.note ? `<div class="order-note">📝 ${o.note}</div>` : ''}
         </div>
         <div class="order-right">
@@ -859,7 +895,7 @@ function selectOrder(id) {
         ${customerDetailsHtml}
         ${o.items.map(i => `
           <div class="detail-item-row">
-            <span class="detail-item-name">${i.emoji} ${i.name}</span>
+            <span class="detail-item-name" style="display:flex;align-items:center;gap:8px;">${getItemMedia(i.emoji, 'detail-item-img')} ${i.name}</span>
             <span class="detail-item-qty">×${i.qty}</span>
             <span class="detail-item-price">₹${i.price * i.qty}</span>
           </div>
@@ -979,7 +1015,7 @@ function renderSummary() {
     ${topItems.length === 0 ? '<p style="color:var(--mid-gray)">No settled bills yet.</p>' :
     topItems.map(([name, info]) => `
       <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--light-gray)">
-        <span style="font-size:24px">${info.emoji}</span>
+        <span style="display:inline-flex;align-items:center;">${getItemMedia(info.emoji, 'detail-item-img')}</span>
         <div style="flex:1">
           <div style="font-size:14px;font-weight:500">${name}</div>
           <div style="font-size:12px;color:var(--mid-gray)">${info.qty} sold</div>
@@ -1005,7 +1041,7 @@ function openBill(id) {
     <div class="bill-section-title" style="margin-top:0">Items</div>
     ${o.items.map(i => `
       <div class="bill-row">
-        <span>${i.emoji} ${i.name} ×${i.qty}</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;">${getItemMedia(i.emoji, 'detail-item-img')} ${i.name} ×${i.qty}</span>
         <span>₹${i.price * i.qty}</span>
       </div>
     `).join('')}
@@ -1107,12 +1143,15 @@ if (localStorage.getItem('cafe_users')) {
 }
 
 // Load Menu Catalog
-if (localStorage.getItem('cafe_menu')) {
-  MENU = JSON.parse(localStorage.getItem('cafe_menu'));
-  updateCategories();
-} else {
+const MENU_VERSION = 'v3';
+if (localStorage.getItem('cafe_menu_version') !== MENU_VERSION || !localStorage.getItem('cafe_menu')) {
   MENU = DEFAULT_MENU;
   saveMenuToStorage();
+  localStorage.setItem('cafe_menu_version', MENU_VERSION);
+  updateCategories();
+} else {
+  MENU = JSON.parse(localStorage.getItem('cafe_menu'));
+  updateCategories();
 }
 
 if (localStorage.getItem('cafe_orders')) {
@@ -1194,7 +1233,7 @@ function triggerEBillSend() {
   generateBillPDF(o.id);
   
   // 2. Open WhatsApp Web/API link with beautiful text bill
-  const itemsText = o.items.map(i => `• ${i.emoji} ${i.name} x${i.qty} - ₹${i.price * i.qty}`).join('\n');
+  const itemsText = o.items.map(i => `• ${getItemEmojiFallback(i.emoji)} ${i.name} x${i.qty} - ₹${i.price * i.qty}`).join('\n');
   const sub = o.items.reduce((s, i) => s + i.price * i.qty, 0);
   const tax = o.total - sub;
   
@@ -1205,4 +1244,64 @@ function triggerEBillSend() {
   
   // Hide inputs
   document.getElementById('ebillInputContainer').style.display = 'none';
+}
+
+// ═══════════════════════════════════════════
+// HIDE-OUT CAFE UI ACTION HELPERS
+// ═══════════════════════════════════════════
+
+function scrollToMenu() {
+  const menuSec = document.getElementById('menuSection');
+  if (menuSec) {
+    menuSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function filterAndScrollToCategory(cat) {
+  const tabs = document.querySelectorAll('.cat-tab');
+  let targetTab = null;
+  tabs.forEach(t => {
+    if (t.textContent.trim().toLowerCase() === cat.toLowerCase()) {
+      targetTab = t;
+    }
+  });
+  
+  if (targetTab) {
+    filterMenu(targetTab, cat);
+  } else {
+    renderMenuItems(cat);
+    currentFilter = cat;
+  }
+  scrollToMenu();
+}
+
+function triggerQuickAdd() {
+  const name = document.getElementById('quickAddName').value.trim();
+  const priceInput = document.getElementById('quickAddPrice').value.trim();
+  const price = parseInt(priceInput);
+  
+  if (!name || isNaN(price) || price < 0) {
+    alert('Please enter a valid item name and price.');
+    return;
+  }
+  
+  const customId = 'custom-' + Date.now();
+  const customItem = {
+    id: customId,
+    name: name,
+    price: price,
+    emoji: '🍽️',
+    desc: 'Custom item added by Admin',
+    cat: 'Custom',
+    veg: true,
+    qty: 1
+  };
+  
+  cart[customId] = customItem;
+  updateCartBar();
+  
+  document.getElementById('quickAddName').value = '';
+  document.getElementById('quickAddPrice').value = '';
+  
+  alert(`Added custom item "${name}" (₹${price}) to cart.`);
 }
