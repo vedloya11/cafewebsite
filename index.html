@@ -259,6 +259,10 @@
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
           Manage Menu
         </button>
+        <button class="nav-item" onclick="adminTab(this,'qr-manage')">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+          QR Codes
+        </button>
         <div class="nav-section-label" style="margin-top:12px">Account</div>
         <button class="nav-item" onclick="logoutAdmin()" style="color: #FFCDD0;">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
@@ -357,6 +361,23 @@
             </div>
           </div>
         </div>
+
+        <!-- QR CODE MANAGEMENT TAB -->
+        <div id="tab-qr-manage" style="display:none">
+          <div class="panel" style="margin-bottom: 24px; padding: 20px;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" style="color:var(--gold);">Hosted Site URL Domain</label>
+              <div style="display:flex; gap:12px;">
+                <input type="text" class="form-input" id="qrSiteDomain" placeholder="https://cafewebsite.onrender.com" style="flex:1;">
+                <button class="btn btn-primary" onclick="generateQRDashboard()" style="padding:10px 20px; font-weight:700;">Update QR URLs</button>
+              </div>
+              <p style="font-size:11px; color:var(--text-secondary); margin-top:8px; line-height:1.4;">
+                Type your hosted Render site URL domain above (e.g. <code>https://cafewebsite.onrender.com</code>) so that generated QR codes point directly to your online menu site with the correct table parameters. Use `http://127.0.0.1:5500` or similar for local testing.
+              </p>
+            </div>
+          </div>
+          <div class="qr-dashboard-grid" id="qrDashboardGrid"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -411,6 +432,18 @@
   <li style="--i:4; --clr:#25d366;"><a href="https://whatsapp.com" target="_blank">💬</a></li>
   <li style="--i:5; --clr:#0077b5;"><a href="https://linkedin.com" target="_blank">🔗</a></li>
 </div>
+
+  <!-- Table Error Warning Overlay -->
+  <div class="table-error-overlay" id="tableErrorOverlay">
+    <div class="table-error-card">
+      <div class="table-error-icon">⚠️</div>
+      <div class="table-error-title">Invalid Table Access</div>
+      <div class="table-error-msg" id="tableErrorMsg">
+        Please scan the official QR code located physically on your table to access the ordering menu securely.
+      </div>
+      <button class="place-order-btn" onclick="location.reload()">Retry Verification</button>
+    </div>
+  </div>
 
 </body>
 </html>
